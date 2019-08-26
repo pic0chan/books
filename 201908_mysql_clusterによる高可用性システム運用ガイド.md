@@ -1,0 +1,14 @@
+- 結論
+  - よくわからないけど横の通信が大量に発生するらしい
+  - もう2週くらいしないと分から無さそう
+- storage engine が ndbcluster
+  - transaction も対応している
+- memory で動作
+  - 保存データ量 * 2(replica) のメモリ総量がクラスタ物理サーバ内で必要ってことですね！
+- LCP --(GCP)--(GCP)--(GCP)-- LCP
+  - LCP がメモリ内全データをディスクに吐出したもの
+  - GCP が LCP からの差分データ
+- LCP * 4 のディスクを用意
+- Epoch 単位で一貫性を保つ
+- ref
+  ndbclusterが初耳でぐぐったら出てきておもしろかた: https://www.slideshare.net/yoku0825/ndbcluster
