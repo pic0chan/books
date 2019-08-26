@@ -5,34 +5,40 @@
   - 単語毎に転置インデックスへ格納:
     - 単語,DocumentID のセット
 
-- 用語:
-  Document: RDBでいうレコード
-  Field: Document 内の key, value のセット
-  Index: Document を保存. (転置インデックスする範囲かな?)
-  Document Type: どんなFieldが入るべきかデータ構造を定義する箱. 前は 1 index に N Document Typeだったけど今は 1:1.
-  Mapping: Document Type に対応づけるデータ構造を具体的に定義したもの
-  Node: ElasticSearch が動作する各サーバ. 1 つの JVM インスタンスのことが本質. つまり 1 ホストに 2 JVM 動かし 2 node といっても良い
-  Cluster: ElasticSearch を複数ノードで協調して動作する範囲
-  Shard: index を分散配置. Cluster 内で分散配置可能.
-  Replica: 各shard を複製したもの.
+- 用語
+  - Document: RDBでいうレコード
+  - Field: Document 内の key, value のセット
+  - Index: Document を保存. (転置インデックスする範囲かな?)
+  - Document Type: どんなFieldが入るべきかデータ構造を定義する箱. 前は 1 index に N Document Typeだったけど今は 1:1.
+  - Mapping: Document Type に対応づけるデータ構造を具体的に定義したもの
+  - Node: ElasticSearch が動作する各サーバ. 1 つの JVM インスタンスのことが本質. つまり 1 ホストに 2 JVM 動かし 2 node といっても良い
+  - Cluster: ElasticSearch を複数ノードで協調して動作する範囲
+  - Shard: index を分散配置. Cluster 内で分散配置可能.
+  - Replica: 各shard を複製したもの.
 
-- Cluster:
-  Master (Master-eligible) ノード
-  - Master ノードになりうるホスト
-  - 1 cluster に 1 台以上存在できる
-  - "node.master: true|false" で設定
-  Data ノード:
-  - データを格納するホスト
-  - "node.data: true|false" で設定
-  Ingest ノード:
-  - ElasticSearch5.0 から登場
-  - 従来のLogstashでやるpipelineだよ
-  - 今のところ俺わからん
-  Coordinating ノード:
-  - scatter フェーズと gather フェーズのみを実施するノード
-  - "node.master: false"
-    "node.data: false"
-    "node.ingest: false"
+- Cluster
+  - Master (Master-eligible) ノード
+    - Master ノードになりうるホスト
+    - 1 cluster に 1 台以上存在できる
+```
+node.master: true|false で設定
+```
+  - Data ノード
+    - データを格納するホスト
+```
+node.data: true|false で設定
+```
+  - Ingest ノード
+    - ElasticSearch5.0 から登場
+    - 従来のLogstashでやるpipelineだよ
+    - 今のところ俺わからん
+  - Coordinating ノード
+    - scatter フェーズと gather フェーズのみを実施するノード
+```
+node.master: false
+node.data: false
+node.ingest: false
+```
 
 - 処理流れ
   1: クエリ来訪
@@ -78,7 +84,7 @@
 "aggs": {
   "<agg_name>": {
     "<agg_type>": {
-      <agg_body>
+      "<agg_body>"
     }
   }
 }
